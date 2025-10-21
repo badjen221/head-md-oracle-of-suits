@@ -19,7 +19,7 @@ function draw() {
   //print();
 
   // pluisieurs cercles qui bougent sur tout le canvas en changeant de couleurs et de tailles
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 3; i++) {
     let cx = random(width);
     let cy = random(height);
     let size = random(10, 100);
