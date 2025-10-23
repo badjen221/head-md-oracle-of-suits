@@ -22,12 +22,7 @@ function draw() {
   // see blendshapes.txt for full list of possible blendshapes
   leftEyeBlink = getBlendshapeScore('eyeBlinkLeft');
 
-  // if the eye is open set background to blue, if closed set to red
-  if (leftEyeBlink < 0.5) {
-    background(0, 0, 255);
-  } else {
-    background(255, 0, 0);
-  }
+    background(0, 0, 0);
 
   if (isVideoReady()) {
     // show video frame
@@ -54,23 +49,23 @@ function draw() {
   // if we blink rightEye, draw a circle
   rightEyeBlink = getBlendshapeScore('eyeBlinkRight');
    if (rightEyeBlink < 0.3) {
-    let rectWidth = map(rightEyeBlink, 0.5, 1.0, 50, 200);
-    let rectHeight = map(rightEyeBlink, 0.5, 1.0, 20, 100);
+    let circleWidth = map(rightEyeBlink, 0.5, 1.0, 50, 200);
+    let circleHeight = map(rightEyeBlink, 0.5, 1.0, 20, 100);
     stroke(1);
     fill(0, 170, 200, 140);
     rectMode(CENTER);
-    circle(1.3* width / 3, height / 4, rectWidth, rectHeight);
+    circle(1.3* width / 3, height / 4, circleWidth, circleHeight);
   }
 
   // if we blink leftEye, draw a circle
   leftEyeBlink = getBlendshapeScore('eyeBlinkLeft');
    if (leftEyeBlink < 0.3) {
-    let rectWidth = map(leftEyeBlink, 0.5, 1.0, 50, 200);
-    let rectHeight = map(leftEyeBlink, 0.5, 1.0, 20, 100);
+    let circleWidth = map(leftEyeBlink, 0.5, 1.0, 50, 200);
+    let circleHeight = map(leftEyeBlink, 0.5, 1.0, 20, 100);
     stroke(1);
     fill(200, 0, 150, 140);
     rectMode(CENTER);
-    circle(1.8 * width / 3, height / 4, rectWidth, rectHeight);
+    circle(1.8 * width / 3, height / 4, circleWidth, circleHeight);
   }
 }
 
