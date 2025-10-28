@@ -62,6 +62,47 @@ function draw() {
   } // end of if detections
 
   // check for pinching gesture to grab bars and move them
+  if (detections) {
+    for (let hand of detections.multiHandLandmarks) {
+      let indexTip = hand[FINGER_TIPS.index];
+      let thumbTip = hand[FINGER_TIPS.thumb];
+
+      // calculate distance between index and thumb tips
+      let d = dist(indexTip.x * videoElement.width, indexTip.y * videoElement.height,
+                   thumbTip.x * videoElement.width, thumbTip.y * videoElement.height);
+
+      // if distance is small enough, consider it a pinch
+      if (d < 40) {
+        // move the closest color bar to the pinch position
+        let pinchX = (indexTip.x + thumbTip.x) / 2 * videoElement.width;
+        let pinchY = (indexTip.y + thumbTip.y) / 2 * videoElement.height;
+
+        // find the closest color bar
+        let closestBar = null;
+        let closestDist = Infinity;
+        for (let bar of colorBars) {
+          let barDist = dist(pinchX, pinchY, bar.x, bar.y);
+          if (barDist < closestDist) {
+            closestDist = barDist;
+            closestBar = bar;
+          }
+        }
+
+        // move the closest bar to the pinch position
+        if (closestBar) {
+          closestBar.x = pinchX;
+          closestBar.y = pinchY;
+        }
+      }
+    }
+  }
+
+  // draw the color bars
+  for (let bar of colorBars) {
+    fill(bar.color);
+    rectMode(CENTER);
+    rect(bar.x, bar.y, bar.width/5, bar.height/5);
+  }
 
 } // end of draw
 
