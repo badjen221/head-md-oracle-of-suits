@@ -33,7 +33,7 @@ function setup() {
   const h = windowHeight;
   const cnv = createCanvas(w, h);
   cnv.parent('sketch-holder');
-
+  
   // créer un rendu WEBGL offscreen pour générer les images "image par image"
   // taille de capture configurable (CAPTURE_WIDTH/HEIGHT)
   pg = createGraphics(CAPTURE_WIDTH, CAPTURE_HEIGHT, WEBGL);
@@ -124,9 +124,31 @@ function draw() {
   }
   image(img, dx, dy, drawW, drawH);
 
+// ---- CACHE VERTICAL ----
+  // largeur visible (fenêtre) en pourcentage du canvas (ajustez ici)
+  const visibleRatio = 0.38; // 0.36 = 36% du canvas visible au centre
+  const visibleW = width * visibleRatio;
+  const visibleX = (width - visibleW) / 2;
+
+  // dessiner deux rectangles noirs qui cachent gauche et droite
+  noStroke();
+  fill(190); // noir plein
+  rect(0, 0, visibleX, height); // gauche
+  rect(visibleX + visibleW, 0, width - (visibleX + visibleW), height); // droite
+
+  // bord lumineux autour de la fenêtre pour l'effet portail
+  const borderAlpha = 180; // ajustez la transparence
+  noStroke();
+  noFill();
+  // bord lumineux et arrondi autour de la fenêtre
+  stroke(190);
+  strokeWeight(70);
+  rect(visibleX + 2, 2, visibleW - 4, height - 4, 80); // léger inset pour ne pas couper
+
 }
 
+// se deplacer le background 
 
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(w, h);
 }
