@@ -100,9 +100,9 @@ function generateFrames() {
     }
 
     // lumières
-    pg.ambientLight(120);
-    pg.directionalLight(255, 255, 255, 0.5, 1, -0.8);
-    pg.pointLight(20, 100, 180, -300, -200, 400);
+    pg.ambientLight(160);
+    pg.directionalLight(200, 255, 255, -0.5, -3, -0.5);
+    pg.pointLight(20, 100, 255, -3000, -2000, 700);
 
     // appliquer l'échelle choisie
     pg.scale(modelScale);
@@ -186,6 +186,7 @@ function draw() {
     frameIndex = (frameIndex + 1) % frames.length;
   } */
 }
+
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
