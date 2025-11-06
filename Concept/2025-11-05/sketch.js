@@ -11,7 +11,7 @@ const CAPTURE_WIDTH = 1200; // résolution de capture (peut réduire pour moins 
 const CAPTURE_HEIGHT = 800;
 
 // nouvelle variable pour contrôler l'échelle du modèle
-let modelScale = 1.0;
+let modelScale = 1.2;
 let design;
 let backgroundImage;
 // élément slider DOM
@@ -39,52 +39,14 @@ function setup() {
   pg = createGraphics(CAPTURE_WIDTH, CAPTURE_HEIGHT, WEBGL);
   pg.noStroke();
 
-  // UI slider pour redimensionner le modèle
-  scaleSlider = createSlider(0.2, 3.0, 1.0, 0.01);
-  scaleSlider.parent('sketch-holder');
-  scaleSlider.style('position', 'absolute');
-  scaleSlider.style('right', '24px');
-  scaleSlider.style('bottom', '24px');
-  scaleSlider.style('z-index', '20');
-  scaleSlider.input(() => {
-    modelScale = scaleSlider.value();
-    // régénérer les frames avec la nouvelle échelle
-    framesReady = false;
-    document.getElementById('loading').style.display = 'block';
-    // léger délai pour laisser le browser afficher le loading
-    setTimeout(() => {
-      generateFrames();
-      framesReady = true;
-      document.getElementById('loading').style.display = 'none';
-    }, 50);
-  });
-
   // générer les frames initiales
-  generateFrames();
+  onboarding();
 
-  // masquer indicateur de chargement si prêt
-  const loading = document.getElementById('loading');
-  if (loading) loading.style.display = framesReady ? 'none' : 'block';
-
-  // smooth default
-  noSmooth();
-  imageMode(CORNER);
-
-  // clic pour play/pause
-  canvas.addEventListener('click', () => { playing = !playing; });
-
-  // option : démarrer au centre de la séquence
-  frameIndex = 0;
 }
 
 // nouvelle fonction : génère les frames selon modelScale et remplit frames[]
-function generateFrames() {
+function onboarding() {
   frames = [];
-  // s'assurer que robotModel est chargé
-  if (!robotModel) {
-    console.warn('robotModel non chargé');
-    return;
-  }
 
   for (let i = 0; i < FRAMES_COUNT; i++) {
     pg.push();
@@ -106,10 +68,6 @@ function generateFrames() {
 
     // appliquer l'échelle choisie
     pg.scale(modelScale);
-
-    // rotation progressive
-    const angle = (i / FRAMES_COUNT) * TWO_PI;
-    pg.rotateY(angle);
 
     // dessiner le modèle
     pg.model(robotModel);
@@ -166,25 +124,6 @@ function draw() {
   }
   image(img, dx, dy, drawW, drawH);
 
-  /* // overlay léger (optionnel)
-  noStroke();
-  fill(0, 0, 0, 80);
-  rect(0, height - 120, width, 120);
-
-  // texte en p5 (complément à l'overlay HTML)
-  textFont(design);
-  fill(255);
-  textAlign(LEFT, TOP);
-  textSize(20);
-  text('Oracle of Suits — Accueil', 32, height - 100);
-  textSize(14);
-  fill(220);
-  text('Cliquez pour pause / lecture — animation image par image du modèle 3D', 32, height - 68);
- */
-  // avancer l'index si en lecture (corrigé)
-  /* if (playing) {
-    frameIndex = (frameIndex + 1) % frames.length;
-  } */
 }
 
 
