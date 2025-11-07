@@ -124,7 +124,7 @@ function draw() {
   }
   image(img, dx, dy, drawW, drawH);
 
-// ---- CACHE VERTICAL ----
+/* // ---- CACHE VERTICAL ----
   // largeur visible (fenêtre) en pourcentage du canvas (ajustez ici)
   const visibleRatio = 0.38; // 0.36 = 36% du canvas visible au centre
   const visibleW = width * visibleRatio;
@@ -143,7 +143,7 @@ function draw() {
   // bord lumineux et arrondi autour de la fenêtre
   stroke(190);
   strokeWeight(70);
-  rect(visibleX + 2, 2, visibleW - 4, height - 4, 80); // léger inset pour ne pas couper
+  rect(visibleX + 2, 2, visibleW - 4, height - 4, 80); // léger inset pour ne pas couper */
 
 }
 
